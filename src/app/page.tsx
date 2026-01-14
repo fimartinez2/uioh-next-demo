@@ -1,66 +1,120 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import {
+  Card,
+  CardContent,
+  CardDivider,
+  CardHeader,
+  ColorModeToggle,
+  Heading,
+  Link,
+  Text,
+  useTheme,
+} from "uioh";
+import GlowEffect from "./components/glow-effect";
+import { Swatch } from "./components/swatch";
+
+export default function Page() {
+  const t = useTheme();
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <>
+      <GlowEffect />
+      <div
+        style={{
+          minHeight: "100vh",
+          background: t.color.bg.canvas,
+          padding: 24,
+          display: "grid",
+          placeItems: "center",
+        }}
+      >
+        <div style={{ width: "min(920px, 100%)", display: "grid", gap: 16 }}>
+          <div style={{ display: "grid", gap: 6 }}>
+            <Heading variant="h2">UI-OH Design System</Heading>
+            <Text color="text.muted">
+              Next.js + paquete uioh importado desde npm. Mismos tokens que
+              Expo.
+            </Text>
+          </div>
+
+          <Card>
+            <CardHeader
+              title="Proof of concept"
+              subtitle="Same components, same tokens (Web + Native)"
+              right={<ColorModeToggle />}
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <CardDivider />
+            <CardContent>
+              <Text variant="label" color="text.brand">
+                Dynamic theme
+              </Text>
+              <Heading variant="h3">Light/Dark sin estilos locales</Heading>
+              <Text color="text.muted">
+                Los componentes consumen tokens desde{" "}
+                <Text variant="bodyStrong" as="span">
+                  useTheme()
+                </Text>
+                . Cambiar modo actualiza automáticamente colores y tipografía.
+              </Text>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader title="Tokens" subtitle="Swatches desde el theme" />
+            <CardDivider />
+            <CardContent>
+              <div
+                style={{
+                  display: "grid",
+                  gap: 10,
+                  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+                }}
+              >
+                <Swatch label="bg.canvas" value={t.color.bg.canvas} />
+                <Swatch label="bg.surface" value={t.color.bg.surface} />
+                <Swatch label="text.primary" value={t.color.text.primary} />
+                <Swatch label="text.brand" value={t.color.text.brand} />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Typography */}
+          <Card>
+            <CardHeader title="Typography" subtitle="Scale + variants" />
+            <CardDivider />
+            <CardContent>
+              <div style={{ display: "grid", gap: 10 }}>
+                <Heading variant="h1">Heading h1</Heading>
+                <Heading variant="h2">Heading h2</Heading>
+                <Heading variant="h3">Heading h3</Heading>
+                <Text>Body (default)</Text>
+                <Text variant="bodyStrong">Body strong</Text>
+                <Text variant="label">Label</Text>
+                <Text variant="caption" color="text.muted">
+                  Caption (muted)
+                </Text>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Links */}
+          <Card>
+            <CardHeader title="Links" subtitle="NPM + GitHub" />
+            <CardDivider />
+            <CardContent>
+              <div style={{ display: "grid", gap: 10 }}>
+                <Link href="https://www.npmjs.com/package/uioh" external>
+                  Ver paquete en npm
+                </Link>
+                <Link href="https://github.com/fimartinez2/uioh" external>
+                  Ver repositorio
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }
